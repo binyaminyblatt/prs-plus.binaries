@@ -1,0 +1,5 @@
+syntax:glob
+dist/*
+tmp/*
+*.o
+*.so

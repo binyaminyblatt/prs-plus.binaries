@@ -1,0 +1,21 @@
+#
+# makefile for Linux (CROSS ARM)
+#
+
+OPTFLAGS=
+
+ALLFLAGS=${OPTFLAGS} -pipe -s -Os \
+    	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+	-DNDEBUG -D_REENTRANT -DENV_UNIX \
+	-D_7ZIP_LARGE_PAGES \
+	$(LOCAL_FLAGS)
+
+override CXX:=$(CXX) $(ALLFLAGS)
+override CC:=$(GCC) $(ALLFLAGS)
+CC_SHARED=-fPIC -DPIC -pthread -shared
+LINK_SHARED=-fPIC -DPIC -shared
+
+LOCAL_LIBS=-lpthread
+
+OBJ_CRC32=$(OBJ_CRC32_C)
+

@@ -1,0 +1,37 @@
+Content:
+	Runs on Linux machines:
+	  cramfs-igorsk - cramfs, originaly modified by igorsk, patched by kartu to work with windows 
+					  shortcut files (lnk). Used ON LINUX MACHINES to build PRS+. (mkcramfs cramfsck)
+					  
+	Runs on Sony Reader:
+	  fb2epub - fb2 to epub converter, depends on zlib (needs "flex" installed on the host system)
+	  lnkparser - windows shortcut (lnk) parser lib (by kartu) could be used to add windows shortcut support
+	  7za - 7 zip 9.20.1, patched to list archive content in PRS+ friendly format
+	  unrar - unrar patched to list archive content in PRS+ friendly format
+	  dictionary - PRS+ dictionary
+
+Building cramfs:
+	Simply execute "make" in corresponding folder
+	
+Cross-compiling Sony Reader executables:
+	1) install / set path to crosscompilers (aka toolchains) in compiler.config (makefiles are configured to compile for both older/newer models, so you need both toolchains). 
+		a) 505/300 models need cross compiler based on 2.4 kernel, Available here (to be unpacked to the /):
+			http://code.google.com/p/prs-plus/downloads/detail?name=arm-toolchain-sony-300.tar.gz
+			(ignore deprecation warning)
+		b) 600 and newer models need 2.6. Available here ("installer" executable): 
+			http://code.google.com/p/prs-plus/downloads/detail?name=arm-2007q3-51-arm-none-linux-gnueabi.bin
+			(ignore deprecation warning)
+	3) install flex on the host system (apt-get install flex) you do NOT need cross version of this
+	4) copy FlexLexer.h (from host include folder) to cross tools include folder (header is still needed to compile)
+	5) cross compile zlib (you need to do it 2 times, once per toolchain):
+		a) get/uncompress version 1.2.5 here: http://zlib.net/
+		b) set path to point to the right toolchain, e.g.:
+			export PATH=/opt/cross/gcc-3.2.3-glibc-2.2.5/arm-unknown-linux-gnu/arm-unknown-linux-gnu/bin/:$PATH
+			export PATH=/media/big/sorcery.600/bin:$PATH
+		c) set CC var for 600's toolchain (since it needs  arm-none-linux-gnueabi- prefix)
+			export CC=arm-none-linux-gnueabi-gcc 
+		d) run ./configure with correct prefix, e.g.:
+			./configure --prefix=/opt/cross/gcc-3.2.3-glibc-2.2.5/arm-unknown-linux-gnu/arm-unknown-linux-gnu
+			./configure --prefix=/media/big/sorcery.600/arm-none-linux-gnueabi
+		e) make & make install - this step should create libz.a and copy zlib.h and copy them to toolchain specific folders 
+	5) run "make" in the checked out root folder for options
