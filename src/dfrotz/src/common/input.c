@@ -173,7 +173,7 @@ void z_read (void)
     int i;
 
     /* Supply default arguments */
-
+    fprintf(stderr, "Starting z-read\n");
     if (zargc < 3)
 	zargs[2] = 0;
 
@@ -212,14 +212,14 @@ void z_read (void)
 	z_show_status ();
 
     /* Read input from current input stream */
-
+    fprintf(stderr, "Before stream_read_input call\n");
     key = stream_read_input (
 	max, buffer,		/* buffer and size */
 	zargs[2],		/* timeout value   */
 	zargs[3],		/* timeout routine */
 	TRUE,	        	/* enable hot keys */
 	h_version == V6);	/* no script in V6 */
-
+    fprintf(stderr, "After stream_read_input call.  buffer=%s\n", buffer);
     if (key == ZC_BAD)
 	return;
 
@@ -227,7 +227,7 @@ void z_read (void)
 
     if (h_version <= V4)
 	save_undo ();
-
+    fprintf(stderr, "A\n");
     /* Copy local buffer back to dynamic memory */
 
     for (i = 0; buffer[i] != 0; i++) {
@@ -246,22 +246,22 @@ void z_read (void)
     }
 
     /* Add null character (V1-V4) or write input length into 2nd byte */
-
+    fprintf(stderr, "B\n");
     if (h_version <= V4)
 	storeb ((zword) (zargs[0] + 1 + i), 0);
     else
 	storeb ((zword) (zargs[0] + 1), i);
 
     /* Tokenise line if a token buffer is present */
-
+    fprintf(stderr, "C\n");
     if (key == ZC_RETURN && zargs[1] != 0)
 	tokenise_line (zargs[0], zargs[1], 0, FALSE);
 
     /* Store key */
-
+    fprintf(stderr, "D\n");
     if (h_version >= V5)
 	store (translate_to_zscii (key));
-
+    fprintf(stderr, "E\n");
 }/* z_read */
 
 /*

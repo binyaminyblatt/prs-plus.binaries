@@ -27,8 +27,7 @@ typedef int bool;
 
 
 #include <stdio.h>
-/* kartu: to fix memset warning */
-#include <string.h>
+
 
 typedef unsigned char zbyte;
 typedef unsigned short zword;
