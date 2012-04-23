@@ -8,6 +8,8 @@ usage:
 			dictionary\n\
 			fb2toepub\n\
 			dfrotz\n\
+			cheapnitfol\n\
+			fruit\n\
 			unrar"
 			
 clean:
@@ -18,7 +20,7 @@ init:
 	
 all: fb2toepub dfrotz unrar 7za dictionary
 	
-fb2toepub cheapglk cheapnitfol dfrotz unrar 7za dictionary : init
+fb2toepub cheapglk cheapnitfol dfrotz fruit unrar 7za dictionary : init
 	rm -f dist/$@*
 	@echo "=== Building $@ for 300 & 505 ==="
 	@cd src/$@; make clean # need to clean 600 objs
