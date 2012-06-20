@@ -1,6 +1,6 @@
 
 build:
-	rm -f *.o dictionary.*
+	rm -f *.o dictionary
 	${CXX} unicode.c desaturate.c dictionary.cpp -o dictionary
 	${STRIP} -s dictionary
 	 

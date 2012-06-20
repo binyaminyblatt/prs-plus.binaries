@@ -3,4 +3,5 @@ dist/*
 tmp/*
 *.o
 *.so
+*.a
 compiler.config
