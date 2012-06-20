@@ -1,7 +1,7 @@
 
 build:
 	rm -f *.o dictionary.*
-	${CXX} radix.cpp -o dictionary
+	${CXX} dictionary.cpp -o dictionary
 	${STRIP} -s dictionary
 	 
 clean:
